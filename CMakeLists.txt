@@ -1,20 +1,23 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0 FATAL_ERROR)
 if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
+    
 endif(COMMAND cmake_policy)
-
+cmake_policy(SET CMP0074 NEW)
 project(CNPY)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 option(ENABLE_STATIC "Build static (.a) library" ON)
 
-find_package(ZLIB REQUIRED)
 
-include_directories(${ZLIB_INCLUDE_DIRS})
+add_subdirectory(${ZLIB_ROOT} "./zlib")
+# find_package(ZLIB REQUIRED)
+
+#include_directories(${ZLIB_INCLUDE_DIRS})
 
 add_library(cnpy SHARED "cnpy.cpp")
-target_link_libraries(cnpy ${ZLIB_LIBRARIES})
+target_link_libraries(cnpy zlib)
 install(TARGETS "cnpy" LIBRARY DESTINATION lib PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
 if(ENABLE_STATIC)
@@ -28,3 +31,4 @@ install(FILES "mat2npz" "npy2mat" "npz2mat" DESTINATION bin PERMISSIONS OWNER_RE
 
 add_executable(example1 example1.cpp)
 target_link_libraries(example1 cnpy)
+
