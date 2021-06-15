@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 option(ENABLE_STATIC "Build static (.a) library" ON)
 
 
-add_subdirectory(${ZLIB_ROOT} "./zlib")
+add_subdirectory(${zlib_SOURCE_DIR} ${zlib_BINARY_DIR})
 # find_package(ZLIB REQUIRED)
 
 #include_directories(${ZLIB_INCLUDE_DIRS})
